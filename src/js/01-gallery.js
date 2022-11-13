@@ -1,7 +1,7 @@
 import { galleryItems } from './gallery-items';
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
-import cardTemp from "../template/cards.hbs"
+// import cardTemp from "../template/cards.hbs"
 
 const galaryDiv = document.querySelector('.gallery');
 
