@@ -1,3 +1,4 @@
+
 import throttle from 'lodash.throttle'
 
 const form = document.querySelector('.feedback-form');
@@ -29,4 +30,3 @@ const onSubmitClick = event => {
     localStorage.removeItem(LOCAL_DATA_NAME);
  }
 form.addEventListener('submit', onSubmitClick);
-
