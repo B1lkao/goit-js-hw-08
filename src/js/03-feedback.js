@@ -10,6 +10,7 @@ const localPrint = {};
 
 const onFormInput = event => {
     localPrint[event.target.name] = event.target.value;
+    
     localStorage.setItem(LOCAL_DATA_NAME, JSON.stringify(localPrint));
  
 };
