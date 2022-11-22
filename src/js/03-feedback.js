@@ -1,32 +1,36 @@
-import throttle from 'lodash.throttle'
+import throttle from 'lodash.throttle';
 
-const form = document.querySelector('.feedback-form');
+const inputEl = document.querySelector('input');
+const textareaEL = document.querySelector('textarea');
+const submitEL = document.querySelector('.feedback-form');
+const TEXTlOCALSTORAGE = "feedback-form-state"
 
-const LOCAL_DATA_NAME = "feedback-form-state";
+inputEl.addEventListener('input', throttle(textInput, 500));
+textareaEL.addEventListener('input', throttle(textInput, 500));
+submitEL.addEventListener('submit', onSubmitClick);
 
-const currentLocal = JSON.parse(localStorage.getItem(LOCAL_DATA_NAME));
+    let textForm = {};   
 
-const localPrint = {};
-
-const onFormInput = event => {
-    localPrint[event.target.name] = event.target.value;
-    
-    localStorage.setItem(LOCAL_DATA_NAME, JSON.stringify(localPrint));
- 
+function textInput(e) {
+    textForm[e.target.name] = e.target.value;
+    localStorage.setItem(TEXTlOCALSTORAGE, JSON.stringify(textForm));
 };
-form.addEventListener('input', throttle(onFormInput, 500));
- 
-const fillForm = () => {
-    currentLocal&&currentLocal.email ? form.email.value = currentLocal.email : null;
-    currentLocal&&currentLocal.message ? form.message.value = currentLocal.message:null;
-     
-}
-fillForm();
 
-const onSubmitClick = event => {
-    event.preventDefault();
-    console.log({'email': form.email.value,'message':form.message.value}); 
-    event.currentTarget.reset();
-    localStorage.removeItem(LOCAL_DATA_NAME);
- }
-form.addEventListener('submit', onSubmitClick);
+   try {
+       const textLocalStorage = localStorage.getItem(TEXTlOCALSTORAGE);
+       if (textLocalStorage){
+        textForm = JSON.parse(textLocalStorage);
+        inputEl.value = textForm[inputEl.name];
+        textareaEL.value = textForm[textareaEL.name];
+    }
+        }
+        catch (error) { 
+            console.log(error);
+        }
+
+function onSubmitClick(e) {
+    e.preventDefault();
+    console.log(textForm);
+    e.currentTarget.reset();
+    localStorage.clear();
+};
